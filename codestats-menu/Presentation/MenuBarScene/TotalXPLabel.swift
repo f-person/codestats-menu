@@ -14,9 +14,13 @@ struct TotalXPLabel: View {
     @ObservedObject var dataFetcher = AccountDataFetcher.shared
 
     var body: some View {
-        Text("\(dataFetcher.xp) XP")
-            .onAppear {
-                dataFetcher.startFetching()
-            }
+        if dataFetcher.currentError != nil {
+            Text(dataFetcher.currentError!)
+        } else {
+            Text("\(dataFetcher.xp) XP")
+                .onAppear {
+                    dataFetcher.startFetching()
+                }
+        }
     }
 }

@@ -35,12 +35,13 @@ public class AccountDataFetcher: ObservableObject {
         stopFetching()
 
         let username = preferences.username
-        print("the username is \(username ?? "")")
         if username == nil || username!.isEmpty {
             return currentError = "ERR: Empty username :("
         }
         let fetchInterval = preferences.fetchInterval
-        print("fetch is \(fetchInterval)")
+        
+        currentError = nil
+        self.fetchData(username: username!)
 
         timer = Timer.scheduledTimer(withTimeInterval: fetchInterval, repeats: true) { _ in
             self.fetchData(username: username!)
