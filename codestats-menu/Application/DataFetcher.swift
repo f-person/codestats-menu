@@ -9,6 +9,7 @@ import Combine
 import Foundation
 import SwiftUI
 
+// TODO: stop/start based on sleep state
 public class AccountDataFetcher: ObservableObject {
     public static let shared = AccountDataFetcher()
     

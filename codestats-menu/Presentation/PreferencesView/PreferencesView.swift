@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 
+// TODO: Start on startup
 struct PreferencesView: View {
     private let intervals: [Int] = [1, 2, 3, 5, 10, 15, 30, 60]
     @State private var localFetchInterval: TimeInterval = AppPreferences.shared.fetchInterval
@@ -22,15 +23,15 @@ struct PreferencesView: View {
             .padding(.bottom)
 
             Picker("Fetch Interval", selection: $localFetchInterval) {
-                   ForEach(intervals, id: \.self) { interval in
-                       Text("\(interval) second\(interval == 1 ? "" : "s")").tag(TimeInterval(interval))
-                   }
-               }
-               .pickerStyle(.menu)
-               .padding(.horizontal)
-               .onChange(of: localFetchInterval) { newValue in
-                   AppPreferences.shared.fetchInterval = newValue
-               }
+                ForEach(intervals, id: \.self) { interval in
+                    Text("\(interval) second\(interval == 1 ? "" : "s")").tag(TimeInterval(interval))
+                }
+            }
+            .pickerStyle(.menu)
+            .padding(.horizontal)
+            .onChange(of: localFetchInterval) { _, newValue in
+                AppPreferences.shared.fetchInterval = newValue
+            }
         }
     }
 }

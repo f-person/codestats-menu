@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MenuBarScene: Scene {
     @State private var shouldDisplayPreferences = false
+    @State private var preferencesWindow: NSWindow?
 
     var body: some Scene {
         MenuBarExtra {
@@ -31,16 +32,24 @@ struct MenuBarScene: Scene {
         }
     }
 
-    // Method to open the preferences window
+    // Opens or focuses the preferences window.
     func openPreferencesWindow() {
-        let preferencesWindow = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: PreferencesRootView.width, height: PreferencesRootView.height),
-            styleMask: [.titled, .closable, .fullSizeContentView],
-            backing: .buffered, defer: false)
-        preferencesWindow.center()
-        preferencesWindow.setFrameAutosaveName("Preferences")
-        preferencesWindow.isReleasedWhenClosed = false
-        preferencesWindow.contentView = NSHostingView(rootView: PreferencesRootView())
-        preferencesWindow.makeKeyAndOrderFront(nil)
+        if let existingWindow = preferencesWindow {
+            existingWindow.makeKeyAndOrderFront(self)
+            NSApp.activate()
+        } else {
+            let window = NSWindow(
+                contentRect: NSRect(x: 0, y: 0, width: PreferencesRootView.width, height: PreferencesRootView.height),
+                styleMask: [.titled, .closable, .fullSizeContentView],
+                backing: .buffered, defer: false)
+            window.center()
+            window.setFrameAutosaveName("Preferences")
+            window.isReleasedWhenClosed = false
+            window.contentView = NSHostingView(rootView: PreferencesRootView())
+            window.makeKeyAndOrderFront(self)
+            NSApp.activate()
+
+            preferencesWindow = window
+        }
     }
 }
