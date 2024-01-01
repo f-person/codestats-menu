@@ -10,8 +10,6 @@ import SwiftUI
 @main
 struct codestats_menuApp: App {
     var body: some Scene {
-        WindowGroup {
-            ContentView()
-        }
+        MenuBarScene()
     }
 }
